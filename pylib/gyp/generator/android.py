@@ -892,12 +892,15 @@ class AndroidMkWriter(object):
     """
     values = ''
     if value_list:
-      value_list = [quoter(prefix + l) for l in value_list]
+      value_list = [self.FixPathSeparator(quoter(prefix + l)) for l in value_list]
       if local_pathify:
-        value_list = [self.LocalPathify(l) for l in value_list]
+        value_list = [self.FixPathSeparator(self.LocalPathify(l)) for l in value_list]
       values = ' \\\n\t' + ' \\\n\t'.join(value_list)
     self.fp.write('%s :=%s\n\n' % (variable, values))
 
+  def FixPathSeparator(self, path):
+    # On Windows, ndk-build cannot recognize path separator '\'.
+    return path.replace('\\', '/')
 
   def WriteLn(self, text=''):
     self.fp.write(text + '\n')
