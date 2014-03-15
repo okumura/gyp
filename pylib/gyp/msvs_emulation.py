@@ -758,6 +758,12 @@ class MsvsSettings(object):
     # TODO(scottmg): Are there configuration settings to set these flags?
     target_platform = 'win32' if self.GetArch(config) == 'x86' else 'x64'
     flags = ['/char', 'signed', '/env', target_platform, '/Oicf']
+    
+    if midl('ValidateParameters', default='true') != 'true':
+      flags.append('/no_robust')
+    if midl('GenerateTypeLibrary', default='true') != 'true':
+      flags.append('/notlb')
+    
     return outdir, output, variables, flags
 
 
