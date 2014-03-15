@@ -50,6 +50,7 @@ generator_supports_multiple_toolsets = True
 generator_additional_non_configuration_keys = [
     # Boolean to declare that this target does not want its name mangled.
     'android_unmangled_name',
+    'android_unmangled_name_strict',
 ]
 generator_additional_path_sections = []
 generator_extra_sources_for_rules = []
@@ -601,7 +602,8 @@ class AndroidMkWriter(object):
     """
 
     if int(spec.get('android_unmangled_name', 0)):
-      assert self.type != 'shared_library' or self.target.startswith('lib')
+      if int(spec.get('android_unmangled_name_strict', 1)):
+        assert self.type != 'shared_library' or self.target.startswith('lib')
       return self.target
 
     if self.type == 'shared_library':
