@@ -1834,11 +1834,11 @@ def GenerateOutputForConfig(target_list, target_dicts, data, params,
     # By making the rules target separate pdb files this might be avoided.
     cc_command = ('ninja -t msvc -e $arch ' +
                   '-- '
-                  '$cc /nologo /showIncludes /FC '
+                  '$cc /nologo /FC '
                   '@$out.rsp /c $in /Fo$out /Fd$pdbname_c ')
     cxx_command = ('ninja -t msvc -e $arch ' +
                    '-- '
-                   '$cxx /nologo /showIncludes /FC '
+                   '$cxx /nologo /FC '
                    '@$out.rsp /c $in /Fo$out /Fd$pdbname_cc ')
     master_ninja.rule(
       'cc',
